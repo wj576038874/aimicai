@@ -1,53 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
 
-    <Button
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sw_news"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawableLeft="@drawable/buluo"
-        android:drawablePadding="20dp"
-        android:paddingLeft="15dp"
-        android:gravity="start|center_vertical"
-        android:text="新的朋友" />
+        android:layout_height="match_parent">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#f2f2f2" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_news"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:paddingLeft="15dp"
-        android:drawableLeft="@drawable/user_fujin_icon"
-        android:drawablePadding="20dp"
-        android:gravity="start|center_vertical"
-        android:text="群聊" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#f2f2f2" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:paddingLeft="15dp"
-        android:drawableLeft="@drawable/user_icon10"
-        android:drawablePadding="20dp"
-        android:gravity="start|center_vertical"
-        android:text="最近聊天" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#f2f2f2" />
 </LinearLayout>
