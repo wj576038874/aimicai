@@ -41,7 +41,7 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_menu_camera" />
+            android:src="@drawable/guoqi" />
 
         <ImageView
             android:id="@+id/iv2"
@@ -51,7 +51,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_menu_camera" />
+            android:src="@drawable/guoqi" />
 
         <ImageView
             android:id="@+id/iv3"
@@ -59,7 +59,7 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            tools:src="@drawable/ic_menu_camera" />
+            tools:src="@drawable/guoqi" />
 
     </LinearLayout>
 
