@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,6 +46,8 @@ public class MainFragment extends BaseFragment implements BaseQuickAdapter.Reque
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         recyclerView = rootView.findViewById(R.id.rv_news);
         swipeRefreshLayout = rootView.findViewById(R.id.sw_news);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(mBaseActivity, R.color.colorPrimary),
+                ContextCompat.getColor(mBaseActivity, R.color.colorAccent));
         swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         newsAdapter = new NewsAdapter();
