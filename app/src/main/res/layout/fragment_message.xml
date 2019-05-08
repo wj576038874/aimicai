@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="?android:attr/selectableItemBackground"
-        android:drawableLeft="@drawable/ic_menu_camera"
+        android:drawableLeft="@drawable/buluo"
         android:drawablePadding="20dp"
         android:paddingLeft="15dp"
         android:gravity="start|center_vertical"
@@ -27,7 +27,7 @@
         android:layout_height="50dp"
         android:background="?android:attr/selectableItemBackground"
         android:paddingLeft="15dp"
-        android:drawableLeft="@drawable/ic_menu_camera"
+        android:drawableLeft="@drawable/user_fujin_icon"
         android:drawablePadding="20dp"
         android:gravity="start|center_vertical"
         android:text="群聊" />
@@ -41,7 +41,7 @@
         android:layout_height="50dp"
         android:background="?android:attr/selectableItemBackground"
         android:paddingLeft="15dp"
-        android:drawableLeft="@drawable/ic_menu_camera"
+        android:drawableLeft="@drawable/user_icon10"
         android:drawablePadding="20dp"
         android:gravity="start|center_vertical"
         android:text="最近聊天" />
