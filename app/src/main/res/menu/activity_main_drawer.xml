@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/va_shoucang"
+            android:title="我的收藏" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/va_gexing"
+            android:title="个性装扮" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/va_xiangce"
+            android:title="我的相册" />
+        <item
+            android:id="@+id/nav_tools"
+            android:icon="@drawable/va_wenjian"
+            android:title="我的文件" />
+    </group>
+
+    <item android:title="选项">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/va_jianli"
+                android:title="我的简历" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/va_jintie"
+                android:title="我的津贴" />
+
+            <item
+                android:icon="@drawable/va_zhengshu"
+                android:title="我的士兵证" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="3dp"
+    android:orientation="vertical">
+    <!--android:background="?android:attr/selectableItemBackground"-->
+    <ImageView
+        android:id="@+id/grid_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_menu_camera" />
+
+    <TextView
+        android:id="@+id/grid_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:textSize="12sp"
+        android:text="草莓" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="立即报名"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingRight="10dp"
+        android:textSize="10sp"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

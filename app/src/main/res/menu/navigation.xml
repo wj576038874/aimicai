@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/va_shouye"
+        android:title="首页" />
+
+    <item
+        android:id="@+id/navigation_message"
+        android:icon="@drawable/va_xiaoxi"
+        android:title="消息" />
+
+    <item
+        android:id="@+id/navigation_service"
+        android:icon="@drawable/va_fuwu"
+        android:title="服务" />
+</menu>

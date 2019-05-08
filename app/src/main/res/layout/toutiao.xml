@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <!--autoStart设置自动加载下一个View-->
+    <!--flipInterval设置View之间切换的时间间隔-->
+    <!--inAnimation设置切换View的进入动画-->
+    <!--outAnimation设置切换View的退出动画-->
+    <!--isFlipping：     判断View切换是否正在进行-->
+
+    <!--setFilpInterval：设置View之间切换的时间间隔-->
+    <!--startFlipping：  开始View的切换，而且会循环进行-->
+    <!--stopFlipping：   停止View的切换-->
+    <!--setOutAnimation：设置切换View的退出动画-->
+    <!--setInAnimation： 设置切换View的进入动画-->
+    <!--showNext：       显示ViewFlipper里的下一个View-->
+    <!--showPrevious：   显示ViewFlipper里的上一个View-->
+
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoStart="true"
+        android:layout_gravity="center_vertical"
+        android:flipInterval="3000"
+        android:inAnimation="@anim/anim_in"
+        android:outAnimation="@anim/anim_out" />
+
+</LinearLayout>
