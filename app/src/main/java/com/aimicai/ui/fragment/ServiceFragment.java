@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.aimicai.R;
 import com.aimicai.base.BaseFragment;
 import com.aimicai.ui.activity.ChuangyeActivity;
+import com.aimicai.ui.activity.DetailActivity;
 import com.aimicai.ui.activity.ShopActivity;
 import com.aimicai.ui.activity.ZhaopinActivity;
 import com.aimicai.ui.activity.ZhiyeActivity;
@@ -75,6 +76,13 @@ public class ServiceFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity() , ShopActivity.class));
+            }
+        });
+
+        rootView.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity() , DetailActivity.class));
             }
         });
         return rootView;

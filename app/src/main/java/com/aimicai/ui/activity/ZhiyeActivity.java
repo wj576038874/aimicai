@@ -45,9 +45,12 @@ public class ZhiyeActivity extends BaseActivity {
         });
 
 
-
-
         delegateAdapter.setAdapters(adapters);
+    }
+
+    @Override
+    protected int getDispatcherLayout() {
+        return 0;
     }
 
     private List<GridInfo> getDatas() {

@@ -80,6 +80,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    @Override
+    protected int getDispatcherLayout() {
+        return 0;
+    }
+
+
     /**
      * 修改显示的内容 不会重新加载
      **/

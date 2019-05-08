@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.aimicai.R;
 import com.aimicai.app.MyApplication;
@@ -38,7 +41,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
 
     private Dialog loadingDialog;
     private RxManager rxManager;
-
+    private Toolbar toolbar;
+    private TextView title;
 
     static {
         //5.0以下兼容vector
@@ -52,18 +56,51 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
         loadingDialog = DialogUtils.createLoadingDialog(this, "加载中...");
     }
 
+
+    protected int getDispatcherLayout() {
+        return R.layout.activity_base_content;
+    }
+
     @Override
     public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
+        /*
+         * getDispatcherLayout默认是activity_base_content+自己的布局 如果返回0则代表自己定义toolbar
+         */
+        if (getDispatcherLayout() != 0) {
+            super.setContentView(R.layout.activity_base_content);
+            ViewGroup content = findViewById(R.id.base_content);
+            toolbar = findViewById(R.id.toolbar);
+            title = findViewById(R.id.toolbar_title);
+            LayoutInflater.from(this).inflate(layoutResID, content);
+        } else {
+            super.setContentView(layoutResID);
+        }
         setStatusBar();
     }
 
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary),0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
     }
 
-    protected void initTitleBar(Toolbar toolbar, String title) {
-        toolbar.setTitle(title);
+
+    protected void setToolbar(String title) {
+        this.title.setText(title);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    protected void initToolbar(Toolbar toolbar){
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

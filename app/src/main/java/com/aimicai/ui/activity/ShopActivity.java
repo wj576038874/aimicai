@@ -45,15 +45,7 @@ public class ShopActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        setToolbar("战友商城");
         recyclerView = findViewById(R.id.recyclerView);
 
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(this);

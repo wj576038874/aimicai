@@ -54,7 +54,7 @@ public abstract class BaseAgentWebActivity extends BaseActivity {
         ErrorLayoutEntity mErrorLayoutEntity = getErrorLayoutEntity();
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(getAgentWebParent(), new ViewGroup.LayoutParams(-1, -1))
-                .useDefaultIndicator(Color.parseColor("#ffffff"), 3)
+                .useDefaultIndicator(getIndicatorColor(), 3)
                 .setWebChromeClient(getWebChromeClient())
                 .setWebViewClient(getWebViewClient())
                 .setWebView(getWebView())

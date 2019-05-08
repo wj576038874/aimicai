@@ -5,33 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
+    app:navigationIcon="@drawable/ic_arrow_back_white"
     app:popupTheme="@style/AppTheme.PopupOverlay">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:scaleType="center"
-            android:src="@drawable/ic_arrow_back_white" />
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:singleLine="true"
-            android:text="爱迷彩"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="爱迷彩"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </android.support.v7.widget.Toolbar>

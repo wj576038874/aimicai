@@ -29,20 +29,10 @@ public class ChuangyeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chuangye);
-
         mTabLayout = findViewById(R.id.mTablayout);
         mViewPager = findViewById(R.id.view_pager);
         toolbar = findViewById(R.id.toolbar);
-
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        initToolbar(toolbar);
 
         mTabLayout.addTab(mTabLayout.newTab().setText("餐饮美食"));
         mTabLayout.addTab(mTabLayout.newTab().setText("服装鞋包"));
@@ -71,6 +61,11 @@ public class ChuangyeActivity extends BaseActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+    }
+
+    @Override
+    protected int getDispatcherLayout() {
+        return 0;
     }
 
     private class PageAdapter extends FragmentStatePagerAdapter {
