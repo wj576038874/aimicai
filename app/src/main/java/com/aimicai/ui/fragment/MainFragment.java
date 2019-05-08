@@ -65,7 +65,7 @@ public class MainFragment extends BaseFragment implements BaseQuickAdapter.Reque
 
 
     private void getNews() {
-        showLoadDialog();
+        swipeRefreshLayout.setRefreshing(true);
         subscribe(OkHttpUtils.getInstance().getApiService().getNews(), new RequestCallback<Response<BaseNewsPageData>>() {
             @Override
             public void onSuccess(Response<BaseNewsPageData> data) {
