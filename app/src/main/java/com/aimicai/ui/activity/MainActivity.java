@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     if (mainFragment == null) {
-                        mainFragment = new MainFragment();
+                        mainFragment = MainFragment.newInstance();
                     }
                     switchContent(mainFragment);
                     textView.setText("首页");
@@ -119,14 +119,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         messageFragment = MessageFragment.newInstance();
                     }
                     switchContent(messageFragment);
-                    textView.setText("通讯录");
+                    textView.setText("电影");
                     return true;
                 case R.id.navigation_service:
                     if (serviceFragment == null) {
                         serviceFragment = ServiceFragment.newInstance();
                     }
                     switchContent(serviceFragment);
-                    textView.setText("战友圈");
+                    textView.setText("我的");
 //                    startActivity(new Intent(MainActivity.this,ZhaopinActivity.class));
                     return true;
             }

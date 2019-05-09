@@ -1,5 +1,6 @@
 package com.aimicai.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,6 @@ public class DetailActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTransparent(this);
+        StatusBarUtil.setTransparentForImageView(this,  findViewById(R.id.toolbar));
     }
 }

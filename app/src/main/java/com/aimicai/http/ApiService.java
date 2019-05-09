@@ -1,6 +1,8 @@
 package com.aimicai.http;
 
 import com.aimicai.entitiy.BaseNewsPageData;
+import com.aimicai.entitiy.movie.HotMovieBean;
+import com.aimicai.entitiy.movie.MovieDetailBean;
 import com.aimicai.entitiy.news.NewsData;
 
 import java.util.Map;
@@ -8,6 +10,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -36,4 +39,15 @@ public interface ApiService {
 
     @GET("http://v.juhe.cn/toutiao/index?type=junshi&key=5b30f60f7d7c0890c943258b4b0a2844")
     Observable<Response<NewsData>> getNew();
+
+    @GET("https://api.douban.com/v2/movie/top250")
+    Observable<Response<HotMovieBean>> getMovieTop250(@Query("start") int start, @Query("count") int count);
+
+    /**
+     * 获取电影详情
+     *
+     * @param id 电影bean里的id
+     */
+    @GET("https://api.douban.com/v2/movie/subject/{id}")
+    Observable<Response<MovieDetailBean>> getMovieDetail(@Path("id") String id);
 }

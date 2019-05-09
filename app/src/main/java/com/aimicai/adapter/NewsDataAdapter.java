@@ -6,6 +6,7 @@ import com.aimicai.R;
 import com.aimicai.entitiy.news.NewsData;
 import com.aimicai.utils.TimeUtil;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -29,9 +30,9 @@ public class NewsDataAdapter extends BaseQuickAdapter<NewsData.Data, BaseViewHol
         helper.setText(R.id.news_title, item.getTitle());
         helper.setText(R.id.posterScreenName, item.getAuthor_name());
         helper.setText(R.id.time, item.getDate());
-        Glide.with(mContext).load(item.getThumbnail_pic_s()).into((ImageView) helper.getView(R.id.iv1));
-        Glide.with(mContext).load(item.getThumbnail_pic_s02()).into((ImageView) helper.getView(R.id.iv2));
-        Glide.with(mContext).load(item.getThumbnail_pic_s03()).into((ImageView) helper.getView(R.id.iv3));
+        Glide.with(mContext).load(item.getThumbnail_pic_s()).apply(new RequestOptions().placeholder(R.drawable.guoqi)).into((ImageView) helper.getView(R.id.iv1));
+        Glide.with(mContext).load(item.getThumbnail_pic_s02()).apply(new RequestOptions().placeholder(R.drawable.guoqi)).into((ImageView) helper.getView(R.id.iv2));
+        Glide.with(mContext).load(item.getThumbnail_pic_s03()).apply(new RequestOptions().placeholder(R.drawable.guoqi)).into((ImageView) helper.getView(R.id.iv3));
 
     }
 }

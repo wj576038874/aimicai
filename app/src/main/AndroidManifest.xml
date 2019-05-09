@@ -37,6 +37,8 @@
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.ShopActivity" />
         <activity android:name=".ui.activity.WebviewActivity" />
+        <activity android:name=".ui.activity.WebActivity"/>
+        <activity android:name=".ui.activity.MovieDetailActivity"/>
     </application>
 
 </manifest>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,15 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aimicai.R;
+import com.aimicai.adapter.HotMovieAdapter;
 import com.aimicai.adapter.NewsDataAdapter;
 import com.aimicai.base.BaseFragment;
 import com.aimicai.entitiy.BaseNewsPageData;
+import com.aimicai.entitiy.movie.HotMovieBean;
 import com.aimicai.entitiy.news.NewsData;
 import com.aimicai.http.OkHttpUtils;
 import com.aimicai.http.RequestCallback;
-import com.aimicai.ui.activity.WebviewActivity;
+import com.aimicai.ui.activity.MovieDetailActivity;
+import com.aimicai.ui.activity.WebActivity;
 import com.aimicai.utils.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+
 
 import retrofit2.Response;
 
@@ -33,11 +39,12 @@ import retrofit2.Response;
  * Use the {@link MessageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private NewsDataAdapter newsDataAdapter;
+    private HotMovieAdapter hotMovieAdapter;
+    private int start;
 
     public MessageFragment() {
     }
@@ -45,7 +52,6 @@ public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
      */
     public static MessageFragment newInstance() {
         MessageFragment fragment = new MessageFragment();
@@ -69,41 +75,71 @@ public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.
                 ContextCompat.getColor(mBaseActivity, R.color.colorAccent));
         swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        newsDataAdapter = new NewsDataAdapter();
-        newsDataAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        hotMovieAdapter = new HotMovieAdapter();
+        hotMovieAdapter.setOnLoadMoreListener(this, recyclerView);
+        hotMovieAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(mBaseActivity , WebviewActivity.class);
-                intent.putExtra("url",newsDataAdapter.getData().get(position).getUrl());
-                intent.putExtra("title" ,newsDataAdapter.getData().get(position).getTitle());
-                startActivity(intent);
+                Intent intent = new Intent(mBaseActivity, MovieDetailActivity.class);
+                intent.putExtra("subjectsBean", hotMovieAdapter.getData().get(position));
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mBaseActivity,
+                        view.findViewById(R.id.iv_moive_photo), "transition_movie_img");
+                //与xml文件对应
+                ActivityCompat.startActivity(mBaseActivity, intent, options.toBundle());
             }
         });
-        recyclerView.setAdapter(newsDataAdapter);
-        getNews();
+        recyclerView.setAdapter(hotMovieAdapter);
+        getMovies();
         return rootView;
     }
 
-    private void getNews() {
+    private void getMovies() {
         swipeRefreshLayout.setRefreshing(true);
-        subscribe(OkHttpUtils.getInstance().getApiService().getNew(), new RequestCallback<Response<NewsData>>() {
+        start = 0;
+        subscribe(OkHttpUtils.getInstance().getApiService().getMovieTop250(start, 20), new RequestCallback<Response<HotMovieBean>>() {
             @Override
-            public void onSuccess(Response<NewsData> data) {
-                dismissLoadDialog();
+            public void onSuccess(Response<HotMovieBean> data) {
                 swipeRefreshLayout.setRefreshing(false);
                 assert data.body() != null;
-                newsDataAdapter.setNewData(data.body().getResult().getData());
+                start += 20;
+                hotMovieAdapter.setNewData(data.body().getSubjects());
             }
 
             @Override
             public void onFailure(String msg) {
-                dismissLoadDialog();
                 swipeRefreshLayout.setRefreshing(false);
                 ToastUtils.showToast(msg);
             }
         });
     }
 
+
+    @Override
+    public void onRefresh() {
+        getMovies();
+    }
+
+
+    private void getPage() {
+        subscribe(OkHttpUtils.getInstance().getApiService().getMovieTop250(start, 20), new RequestCallback<Response<HotMovieBean>>() {
+            @Override
+            public void onSuccess(Response<HotMovieBean> data) {
+                assert data.body() != null;
+                if (data.body().getSubjects() != null && data.body().getSubjects().size() > 0) {
+                    hotMovieAdapter.addData(data.body().getSubjects());
+                    start += 20;
+                    hotMovieAdapter.loadMoreComplete();
+                } else {
+                    hotMovieAdapter.loadMoreEnd();
+                }
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                ToastUtils.showToast(msg);
+            }
+        });
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -116,7 +152,7 @@ public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.
     }
 
     @Override
-    public void onRefresh() {
-        getNews();
+    public void onLoadMoreRequested() {
+        getPage();
     }
 }

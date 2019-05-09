@@ -9,10 +9,10 @@
     <item
         android:id="@+id/navigation_message"
         android:icon="@drawable/va_xiaoxi"
-        android:title="消息" />
+        android:title="新闻" />
 
     <item
         android:id="@+id/navigation_service"
         android:icon="@drawable/va_fuwu"
-        android:title="服务" />
+        android:title="我的" />
 </menu>
