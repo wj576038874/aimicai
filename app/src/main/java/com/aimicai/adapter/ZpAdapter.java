@@ -13,6 +13,7 @@ import com.aimicai.entitiy.ZpInfo;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -55,7 +56,8 @@ public class ZpAdapter extends DelegateAdapter.Adapter<ZpAdapter.ZpHolder> {
         holder.title.setText(datas.get(position).getTitle());
         holder.subtitle1.setText(datas.get(position).getSubTitle1());
         holder.subtitle2.setText(datas.get(position).getSubTiltle2());
-        holder.imageView.setImageResource(datas.get(position).getImage());
+        Glide.with(context).load(datas.get(position).getImage()).into(holder.imageView);
+//        holder.imageView.setImageResource(datas.get(position).getImage());
     }
 
     @Override

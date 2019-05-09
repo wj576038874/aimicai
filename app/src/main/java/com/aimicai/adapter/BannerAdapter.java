@@ -67,7 +67,7 @@ public class BannerAdapter extends DelegateAdapter.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder.itemView instanceof XBanner) {
             XBanner xBanner = (XBanner) holder.itemView;
-            xBanner.setPageTransformer(Transformer.Accordion);
+            xBanner.setPageTransformer(Transformer.Rotate);
             List<String> strings = new ArrayList<>();
             strings.add("11111111111111111");
             strings.add("22222222222222222");

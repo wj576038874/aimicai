@@ -153,9 +153,11 @@ public class MovieDetailActivity extends BaseActivity {
     }
 
     private void loadDetail(String id){
+        showLoadDialog();
         subscribe(OkHttpUtils.getInstance().getApiService().getMovieDetail(id), new RequestCallback<Response<MovieDetailBean>>() {
             @Override
             public void onSuccess(Response<MovieDetailBean> data) {
+                dismissLoadDialog();
                 movieDetailBean = data.body();
                 tvMovieCity.setText("制片国家/地区： " + movieDetailBean.getCountriesString());
                 tvMovieSubTitle.setText(movieDetailBean.getAkaString());

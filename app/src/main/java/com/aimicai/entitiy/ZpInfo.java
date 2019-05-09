@@ -5,7 +5,7 @@ public class ZpInfo {
     private String subTitle1;
     private String subTiltle2;
 
-    private int image;
+    private String image;
 
     public String getTitle() {
         return title;
@@ -31,11 +31,11 @@ public class ZpInfo {
         this.subTiltle2 = subTiltle2;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

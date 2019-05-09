@@ -89,6 +89,8 @@ public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.
             }
         });
         recyclerView.setAdapter(hotMovieAdapter);
+        hotMovieAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        hotMovieAdapter.isFirstOnly(false);
         getMovies();
         return rootView;
     }

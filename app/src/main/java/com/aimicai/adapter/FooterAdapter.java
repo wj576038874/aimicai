@@ -15,6 +15,7 @@ import com.aimicai.entitiy.FooterInfo;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.ColumnLayoutHelper;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class FooterAdapter extends DelegateAdapter.Adapter<FooterAdapter.FooterH
             holder.title.setTextColor(ContextCompat.getColor(context , android.R.color.holo_blue_light));
         }
         holder.subtitle.setText(datas.get(position).getSubtitle());
-        holder.imageView.setImageResource(datas.get(position).getImgid());
+        Glide.with(context).load(datas.get(position).getImg()).into(holder.imageView);
     }
 
     @Override

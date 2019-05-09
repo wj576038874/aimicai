@@ -4,7 +4,7 @@ public class FooterInfo {
     private String title;
     private String subtitle;
 
-    private int imgid;
+    private String img;
 
     public String getTitle() {
         return title;
@@ -22,11 +22,11 @@ public class FooterInfo {
         this.subtitle = subtitle;
     }
 
-    public int getImgid() {
-        return imgid;
+    public String getImg() {
+        return img;
     }
 
-    public void setImgid(int imgid) {
-        this.imgid = imgid;
+    public void setImg(String img) {
+        this.img = img;
     }
 }

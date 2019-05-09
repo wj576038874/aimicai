@@ -99,13 +99,13 @@ public class ZhaopinActivity extends BaseActivity {
         FooterInfo footerInfo = new FooterInfo();
         footerInfo.setTitle("精英竞会拍");
         footerInfo.setSubtitle("互联网人才请进");
-        footerInfo.setImgid(R.drawable.ic_menu_camera);
+        footerInfo.setImg("https://img.alicdn.com/tfs/TB14X0MdfDH8KJjy1XcXXcpdXXa-350-350.jpg_240x240xz.jpg_.webp");
         footerInfos.add(footerInfo);
 
         footerInfo = new FooterInfo();
         footerInfo.setTitle("企业急招聘");
         footerInfo.setSubtitle("120万服务岗缺人");
-        footerInfo.setImgid(R.drawable.ic_menu_camera);
+        footerInfo.setImg("https://img.alicdn.com/tfs/TB1ed1NaOqAXuNjy1XdXXaYcVXa-350-350.jpg_240x240xz.jpg_.webp");
         footerInfos.add(footerInfo);
 
         FooterAdapter footerAdapter = new FooterAdapter(this, footerInfos, new ColumnLayoutHelper());
@@ -120,28 +120,28 @@ public class ZhaopinActivity extends BaseActivity {
         zpInfo.setTitle("互联网/电子商务");
         zpInfo.setSubTitle1("前端开发 PHP");
         zpInfo.setSubTiltle2("数据分析");
-        zpInfo.setImage(R.drawable.ic_menu_camera);
+        zpInfo.setImage("https://img02.51jobcdn.com/im/mkt/zn/banner/20190306/rlzy/155_60.jpg");
         zpInfos.add(zpInfo);
 
         zpInfo = new ZpInfo();
         zpInfo.setTitle("金融/投资/证券");
         zpInfo.setSubTitle1("期货操盘 融资专员");
         zpInfo.setSubTiltle2("金融分析师");
-        zpInfo.setImage(R.drawable.ic_menu_camera);
+        zpInfo.setImage("https://img02.51jobcdn.com/im/mkt/tg/2018banner/lztx/155_60.jpg");
         zpInfos.add(zpInfo);
 
         zpInfo = new ZpInfo();
         zpInfo.setTitle("汽车及零配件");
         zpInfo.setSubTitle1("配件/销售 质量管理");
         zpInfo.setSubTiltle2("技术支持");
-        zpInfo.setImage(R.drawable.ic_menu_camera);
+        zpInfo.setImage("https://img02.51jobcdn.com/im/mkt/zn/banner/20190419/155_60.jpg");
         zpInfos.add(zpInfo);
 
         zpInfo = new ZpInfo();
         zpInfo.setTitle("房地产");
         zpInfo.setSubTitle1("造价师 规划设计");
         zpInfo.setSubTiltle2("房产经纪人");
-        zpInfo.setImage(R.drawable.ic_menu_camera);
+        zpInfo.setImage("https://img02.51jobcdn.com/im/mkt/tg/2018banner/xinchou/155_60.jpg");
         zpInfos.add(zpInfo);
 
         return zpInfos;
@@ -152,27 +152,27 @@ public class ZhaopinActivity extends BaseActivity {
 
         ZhaopinMenu zhaopinMenu = new ZhaopinMenu();
         zhaopinMenu.setName("职位搜索");
-        zhaopinMenu.setDrawableId(R.drawable.ic_menu_camera);
+        zhaopinMenu.setDrawableId(R.drawable.zp_sousuo);
         datas.add(zhaopinMenu);
 
         zhaopinMenu = new ZhaopinMenu();
         zhaopinMenu.setName("谁看过我");
-        zhaopinMenu.setDrawableId(R.drawable.ic_menu_camera);
+        zhaopinMenu.setDrawableId(R.drawable.zp_icon3);
         datas.add(zhaopinMenu);
 
         zhaopinMenu = new ZhaopinMenu();
         zhaopinMenu.setName("申请记录");
-        zhaopinMenu.setDrawableId(R.drawable.ic_menu_camera);
+        zhaopinMenu.setDrawableId(R.drawable.zp_icon2);
         datas.add(zhaopinMenu);
 
         zhaopinMenu = new ZhaopinMenu();
         zhaopinMenu.setName("校园招聘");
-        zhaopinMenu.setDrawableId(R.drawable.ic_menu_camera);
+        zhaopinMenu.setDrawableId(R.drawable.zp_icon4);
         datas.add(zhaopinMenu);
 
         zhaopinMenu = new ZhaopinMenu();
         zhaopinMenu.setName("求职攻略");
-        zhaopinMenu.setDrawableId(R.drawable.ic_menu_camera);
+        zhaopinMenu.setDrawableId(R.drawable.zp_icon1);
         datas.add(zhaopinMenu);
 
         return datas;
