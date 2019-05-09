@@ -46,4 +46,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.41'
     api 'com.just.agentweb:agentweb:4.0.3-alpha@aar' // (必选)
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 }

@@ -1,5 +1,6 @@
 package com.aimicai.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.aimicai.R;
 import com.aimicai.adapter.GridAdapter;
 import com.aimicai.base.BaseActivity;
 import com.aimicai.entitiy.GridInfo;
+import com.aimicai.utils.StatusBarUtil;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
@@ -46,6 +48,16 @@ public class ZhiyeActivity extends BaseActivity {
 
 
         delegateAdapter.setAdapters(adapters);
+    }
+
+    @Override
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+            StatusBarUtil.setColor(this, getResources().getColor(R.color.white),0);
+            StatusBarUtil.setLightMode(this);
+        }else {
+            StatusBarUtil.setColor(this, getResources().getColor(R.color.white));
+        }
     }
 
     @Override

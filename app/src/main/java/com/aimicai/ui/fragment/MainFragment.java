@@ -86,7 +86,7 @@ public class MainFragment extends BaseFragment implements BaseQuickAdapter.Reque
             }
         });
         recyclerView.setAdapter(newsDataAdapter);
-        newsDataAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        newsDataAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         newsDataAdapter.isFirstOnly(false);
         getNews();
         return rootView;

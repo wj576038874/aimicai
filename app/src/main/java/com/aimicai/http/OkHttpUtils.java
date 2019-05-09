@@ -84,6 +84,7 @@ public class OkHttpUtils {
         if (okHttpClient == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.addNetworkInterceptor(interceptor);
+            builder.addInterceptor(new CommonHeaderInterceptor());
             builder.connectTimeout(15 * 1000, TimeUnit.SECONDS);
             builder.addInterceptor(new LoggerInterceptor("OkHttpUtils", true));
             builder.readTimeout(15 * 1000, TimeUnit.MILLISECONDS);//超时时间

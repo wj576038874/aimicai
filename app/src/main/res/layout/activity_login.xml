@@ -37,6 +37,7 @@
                     android:layout_height="36dp"
                     android:layout_marginLeft="6dp"
                     android:background="@null"
+                    android:text="15012551396"
                     android:drawableLeft="@drawable/ic_menu_camera"
                     android:drawablePadding="10dp"
                     android:hint="请输入手机号"
@@ -67,6 +68,7 @@
                     android:drawableLeft="@drawable/ic_menu_camera"
                     android:drawablePadding="10dp"
                     android:hint="请输入密码"
+                    android:text="1rujiwang"
                     android:inputType="textPassword"
                     android:textSize="16sp" />
 

@@ -139,7 +139,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
                                         requestCallback.onFailure("response is null");
                                     }
                                 } else {
-                                    requestCallback.onFailure("请求出错了" + response.message() + "，错误代码" + response.code());
+                                    if (response.code() == 400){
+                                        requestCallback.onFailure("账号和密码错误");
+                                    }
                                 }
                             } else {
                                 requestCallback.onFailure("response is null");

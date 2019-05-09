@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,11 +25,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aimicai.R;
+import com.aimicai.app.MyApplication;
 import com.aimicai.base.BaseActivity;
+import com.aimicai.entitiy.UserInfo;
 import com.aimicai.ui.fragment.MainFragment;
 import com.aimicai.ui.fragment.MessageFragment;
 import com.aimicai.ui.fragment.ServiceFragment;
+import com.aimicai.utils.AndroidUtils;
 import com.aimicai.utils.StatusBarUtil;
+import com.aimicai.utils.ToastUtils;
+import com.aimicai.utils.UserManager;
+import com.bumptech.glide.Glide;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,6 +48,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView textView;
     private View headView;
     private DrawerLayout drawer;
+
+
+    private CircleImageView avatar;
+    private ImageView avatar_bg;
+    private TextView tvUserNmae;
+    private TextView tvEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +78,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         headView = navigationView.getHeaderView(0);
-        headView.findViewById(R.id.imageView).setOnClickListener(new View.OnClickListener() {
+
+        avatar = headView.findViewById(R.id.avatar);
+        tvUserNmae = headView.findViewById(R.id.username);
+        tvEmail = headView.findViewById(R.id.email);
+        avatar_bg = headView.findViewById(R.id.avatar_bg);
+
+        headView.findViewById(R.id.avatar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this , LoginActivity.class));
+                drawer.closeDrawer(GravityCompat.START);
+                if (TextUtils.isEmpty(UserManager.getInstance().getAccessToken())){
+                    startActivity(new Intent(MainActivity.this , LoginActivity.class));
+                }else {
+                    ToastUtils.showToast("个人信息");
+                }
             }
         });
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,6 +104,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        checkLoginStatus();
     }
 
     @Override
@@ -85,6 +113,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return 0;
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        checkLoginStatus();
+    }
+
+    /**
+     * 检测是否登录状态
+     */
+    private void checkLoginStatus(){
+        if (!TextUtils.isEmpty(UserManager.getInstance().getAccessToken())){
+            UserInfo userInfo = UserManager.getInstance().getUserInfo();
+            if (userInfo!=null){
+                Glide.with(this).load(userInfo.getAvatar()).into(avatar);
+                Glide.with(this).load(userInfo.getAvatar()).into(avatar_bg);
+                tvEmail.setText(userInfo.getEmail());
+                tvUserNmae.setText(userInfo.getUsername());
+            }
+        }else {
+            tvEmail.setText("");
+            tvUserNmae.setText("注册/登录");
+        }
+    }
 
     /**
      * 修改显示的内容 不会重新加载
@@ -184,9 +235,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         } else if (id == R.id.nav_send) {
 
+        }else if (id == R.id.loginout){
+            UserManager.getInstance().loginout();
+            finish();
+            AndroidUtils.startAnotherApp(MyApplication.getContext(), MyApplication.getContext().getPackageName());
         }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

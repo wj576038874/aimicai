@@ -34,8 +34,9 @@
                 android:title="我的津贴" />
 
             <item
+                android:id="@+id/loginout"
                 android:icon="@drawable/va_zhengshu"
-                android:title="我的士兵证" />
+                android:title="退出登录" />
         </menu>
     </item>
 

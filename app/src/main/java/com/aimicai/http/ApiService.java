@@ -1,6 +1,8 @@
 package com.aimicai.http;
 
 import com.aimicai.entitiy.BaseNewsPageData;
+import com.aimicai.entitiy.RegisterInfo;
+import com.aimicai.entitiy.UserInfo;
 import com.aimicai.entitiy.movie.HotMovieBean;
 import com.aimicai.entitiy.movie.MovieDetailBean;
 import com.aimicai.entitiy.news.NewsData;
@@ -9,7 +11,11 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -50,4 +56,12 @@ public interface ApiService {
      */
     @GET("https://api.douban.com/v2/movie/subject/{id}")
     Observable<Response<MovieDetailBean>> getMovieDetail(@Path("id") String id);
+
+    @Headers("type:bmob")//区分请求
+    @GET("https://api2.bmob.cn/1/login")
+    Observable<Response<UserInfo>> login(@Query("username") String username, @Query("password") String password);
+
+
+    @POST("https://api2.bmob.cn/1/users")
+    Observable<Response<UserInfo>> register(@Body RegisterInfo registerInfo);
 }
