@@ -89,7 +89,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 if (TextUtils.isEmpty(UserManager.getInstance().getAccessToken())){
-                    startActivity(new Intent(MainActivity.this , LoginActivity.class));
+                    MyApplication.getHandler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(MainActivity.this , LoginActivity.class));
+                        }
+                    },300);
                 }else {
                     ToastUtils.showToast("个人信息");
                 }
