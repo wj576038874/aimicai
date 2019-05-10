@@ -11,94 +11,210 @@ import java.io.Serializable;
  */
 public class UserInfo implements Serializable {
 
-    private String createdAt;
-    private String email;
-    private boolean emailVerified;
-    private String mobilePhoneNumber;
-    private boolean mobilePhoneNumberVerified;
-    private String objectId;
-    private String sessionToken;
-    private String updatedAt;
-    private String username;
-    private String avatar;
+    private int id;                     // ID
+    private String login;               // 用户名
+    private String name;                // 昵称
+    private String avatar_url;          // 头像链接
+    private String location;            // 城市
+    private String company;             // 公司
+    private String twitter;             // twitter
+    private String website;             // 网站地址
+    private String bio;                 // 个人介绍
+    private String tagline;             // 签名
+    private String github;              // github
+    private String created_at;          // 创建时间
+    private String email;               // email
+    private int topics_count;           // 话题数量
+    private int replies_count;          // 回复数量
+    private int following_count;        // 正在 follow 的人数
+    private int followers_count;        // follow 他的人数
+    private int favorites_count;        // 收藏的数量
+    private String level;               // 等级
+    private String level_name;          // 等级名称
 
-    public String getAvatar() {
-        return avatar;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public int getId() {
+        return this.id;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public String getLogin() {
+        return this.login;
     }
 
-    public String getEmail() {
-        return email;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
+    }
+
+    public String getAvatar_url() {
+        return this.avatar_url;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return this.location;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getCompany() {
+        return this.company;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getTwitter() {
+        return this.twitter;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getWebsite() {
+        return this.website;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getBio() {
+        return this.bio;
+    }
+
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
+    }
+
+    public String getTagline() {
+        return this.tagline;
+    }
+
+    public void setGithub(String github) {
+        this.github = github;
+    }
+
+    public String getGithub() {
+        return this.github;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getCreated_at() {
+        return this.created_at;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public boolean isEmailVerified() {
-        return emailVerified;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setEmailVerified(boolean emailVerified) {
-        this.emailVerified = emailVerified;
+    public void setTopics_count(int topics_count) {
+        this.topics_count = topics_count;
     }
 
-    public String getMobilePhoneNumber() {
-        return mobilePhoneNumber;
+    public int getTopics_count() {
+        return this.topics_count;
     }
 
-    public void setMobilePhoneNumber(String mobilePhoneNumber) {
-        this.mobilePhoneNumber = mobilePhoneNumber;
+    public void setReplies_count(int replies_count) {
+        this.replies_count = replies_count;
     }
 
-    public boolean isMobilePhoneNumberVerified() {
-        return mobilePhoneNumberVerified;
+    public int getReplies_count() {
+        return this.replies_count;
     }
 
-    public void setMobilePhoneNumberVerified(boolean mobilePhoneNumberVerified) {
-        this.mobilePhoneNumberVerified = mobilePhoneNumberVerified;
+    public void setFollowing_count(int following_count) {
+        this.following_count = following_count;
     }
 
-    public String getObjectId() {
-        return objectId;
+    public int getFollowing_count() {
+        return this.following_count;
     }
 
-    public void setObjectId(String objectId) {
-        this.objectId = objectId;
+    public void setFollowers_count(int followers_count) {
+        this.followers_count = followers_count;
     }
 
-    public String getSessionToken() {
-        return sessionToken;
+    public int getFollowers_count() {
+        return this.followers_count;
     }
 
-    public void setSessionToken(String sessionToken) {
-        this.sessionToken = sessionToken;
+    public void setFavorites_count(int favorites_count) {
+        this.favorites_count = favorites_count;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public int getFavorites_count() {
+        return this.favorites_count;
     }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLevel() {
+        return this.level;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLevel_name(String level_name) {
+        this.level_name = level_name;
+    }
+
+    public String getLevel_name() {
+        return this.level_name;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDetail{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar_url='" + avatar_url + '\'' +
+                ", location='" + location + '\'' +
+                ", company='" + company + '\'' +
+                ", twitter='" + twitter + '\'' +
+                ", website='" + website + '\'' +
+                ", bio='" + bio + '\'' +
+                ", tagline='" + tagline + '\'' +
+                ", github='" + github + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", email='" + email + '\'' +
+                ", topics_count=" + topics_count +
+                ", replies_count=" + replies_count +
+                ", following_count=" + following_count +
+                ", followers_count=" + followers_count +
+                ", favorites_count=" + favorites_count +
+                ", level='" + level + '\'' +
+                ", level_name='" + level_name + '\'' +
+                '}';
     }
 }

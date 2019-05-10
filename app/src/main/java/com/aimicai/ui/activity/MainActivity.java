@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.text.TextUtils;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,7 +15,6 @@ import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -36,8 +32,11 @@ import com.aimicai.utils.StatusBarUtil;
 import com.aimicai.utils.ToastUtils;
 import com.aimicai.utils.UserManager;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -48,12 +47,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView textView;
     private View headView;
     private DrawerLayout drawer;
-
+    private TextView tv_location;
 
     private CircleImageView avatar;
     private ImageView avatar_bg;
     private TextView tvUserNmae;
     private TextView tvEmail;
+    private TextView tagline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar!= null){
+        if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
         textView = findViewById(R.id.title);
@@ -75,6 +75,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ft.commit();
 
         drawer = findViewById(R.id.drawer_layout);
+        tv_location = findViewById(R.id.tv_location);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         headView = navigationView.getHeaderView(0);
@@ -83,20 +84,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         tvUserNmae = headView.findViewById(R.id.username);
         tvEmail = headView.findViewById(R.id.email);
         avatar_bg = headView.findViewById(R.id.avatar_bg);
+        tagline = headView.findViewById(R.id.tagline);
 
         headView.findViewById(R.id.avatar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
-                if (TextUtils.isEmpty(UserManager.getInstance().getAccessToken())){
+                if (UserManager.getInstance().isLogin()) {
                     MyApplication.getHandler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startActivity(new Intent(MainActivity.this , LoginActivity.class));
+                            startActivity(new Intent(MainActivity.this, UserInfoActivity.class));
                         }
-                    },300);
-                }else {
-                    ToastUtils.showToast("个人信息");
+                    }, 300);
+                } else {
+                    MyApplication.getHandler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        }
+                    }, 300);
                 }
             }
         });
@@ -127,17 +134,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     /**
      * 检测是否登录状态
      */
-    private void checkLoginStatus(){
-        if (!TextUtils.isEmpty(UserManager.getInstance().getAccessToken())){
+    private void checkLoginStatus() {
+        if (UserManager.getInstance().isLogin()) {
             UserInfo userInfo = UserManager.getInstance().getUserInfo();
-            if (userInfo!=null){
-                Glide.with(this).load(userInfo.getAvatar()).into(avatar);
-                Glide.with(this).load(userInfo.getAvatar()).into(avatar_bg);
+            if (userInfo != null) {
+                String avatarUrl = userInfo.getAvatar_url().replace("large_", "");
+                Glide.with(this).load(avatarUrl).apply(new RequestOptions().error(R.drawable.personal_head)).into(avatar);
+                //模糊度15
+                Glide.with(this)
+                        .load(avatarUrl)
+                        .transition(new DrawableTransitionOptions().crossFade(300))
+                        .apply(new RequestOptions().error(R.drawable.personal_head).transform(new BlurTransformation(20, 1)))
+                        .into(avatar_bg);
+                tvEmail.setVisibility(View.GONE);
+                tagline.setVisibility(View.VISIBLE);
                 tvEmail.setText(userInfo.getEmail());
-                tvUserNmae.setText(userInfo.getUsername());
+                tvUserNmae.setText(userInfo.getLogin());
+                tagline.setText(userInfo.getTagline());
+                tv_location.setText(userInfo.getLocation());
             }
-        }else {
-            tvEmail.setText("");
+        } else {
+            tvEmail.setVisibility(View.GONE);
+            tagline.setVisibility(View.GONE);
             tvUserNmae.setText("注册/登录");
         }
     }
@@ -240,7 +258,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         } else if (id == R.id.nav_send) {
 
-        }else if (id == R.id.loginout){
+        } else if (id == R.id.loginout) {
             UserManager.getInstance().loginout();
             finish();
             AndroidUtils.startAnotherApp(MyApplication.getContext(), MyApplication.getContext().getPackageName());
@@ -251,6 +269,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColorForDrawerLayout(this , (DrawerLayout) findViewById(R.id.drawer_layout), getResources().getColor(R.color.colorPrimary) , 0);
+        StatusBarUtil.setColorForDrawerLayout(this, (DrawerLayout) findViewById(R.id.drawer_layout), getResources().getColor(R.color.colorPrimary), 0);
     }
 }

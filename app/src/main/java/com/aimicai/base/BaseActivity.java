@@ -136,12 +136,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
                                     if (response.body() != null) {
                                         requestCallback.onSuccess(t);
                                     } else {
-                                        requestCallback.onFailure("response is null");
+                                        requestCallback.onFailure("response data is null");
                                     }
                                 } else {
-                                    if (response.code() == 400){
-                                        requestCallback.onFailure("账号和密码错误");
-                                    }
+                                    throw new HttpException(response);
                                 }
                             } else {
                                 requestCallback.onFailure("response is null");
@@ -153,12 +151,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
                             String msg = null;
                             if (throwable instanceof HttpException) {
                                 HttpException he = (HttpException) throwable;
+                                /**
+                                 * 200, 201 - 请求成功，或执行成功
+                                 * 400 - 参数不符合 API 的要求、或者数据格式验证没有通过，请配合 Response Body 里面的 error 信息确定问题。
+                                 * 401 - 用户认证失败，或缺少认证信息，比如 access_token 过期，或没传，可以尝试用 refresh_token 方式获得新的 access_token。
+                                 * 403 - 当前用户对资源没有操作权限
+                                 * 404 - 资源不存在。
+                                 * 500 - 服务器异常
+                                 */
                                 switch (he.code()) {
                                     case 400:
-                                        msg = "手机号或验证码错误";
+                                        msg = "参数有误";
                                         break;
                                     case 401:
-                                        requestCallback.onFailure("登录失效");
+                                        requestCallback.onFailure("手机号或密码错误");
                                         break;
                                     default:
                                         msg = "请求出错了，错误代码" + he.code();

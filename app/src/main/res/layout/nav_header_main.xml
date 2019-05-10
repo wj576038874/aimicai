@@ -13,7 +13,7 @@
         android:src="@drawable/timg" />
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="15dp"
@@ -23,9 +23,10 @@
             android:id="@+id/avatar"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/guoqi"
-            app:civ_border_width="1dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/personal_head"
             app:civ_border_color="@color/white"
+            app:civ_border_width="1dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,28 +34,41 @@
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:text="中国军魂"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#333"
-            app:layout_constraintVertical_chainStyle="packed"
-            android:textSize="16sp"
+            android:textSize="15dp"
             app:layout_constraintBottom_toTopOf="@+id/email"
             app:layout_constraintLeft_toRightOf="@+id/avatar"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="5760asdasd@"
+            android:layout_marginLeft="10dp"
+            android:text="5760@"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#999"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toTopOf="@+id/tagline"
             app:layout_constraintLeft_toRightOf="@+id/avatar"
             app:layout_constraintTop_toBottomOf="@+id/username" />
+
+        <TextView
+            android:id="@+id/tagline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="taglinetagline"
+            android:textColor="@color/colorAccent"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/avatar"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email" />
 
     </android.support.constraint.ConstraintLayout>
 

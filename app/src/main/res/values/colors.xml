@@ -9,4 +9,16 @@
     <color name="transprant">#00ffffff</color>
     <!--item的水波纹颜色-->
     <color name="itemBackground">#DD7D7D7D</color>
+
+    <color name="text_1">#333333</color>
+    <color name="text_2">#bbbbbb</color>
+    <color name="text_3">#5b5b5b</color>
+    <color name="text_4">#c1c1c1</color>
+    <color name="text_5">#009cff</color>
+    <color name="text_6">#3fb9ff</color>
+    <color name="text_7">#007ECE</color>
+    <color name="text_8">#808080</color>
+    <color name="text_9">#999999</color>
+
+    <color name="dividing_line">#e7e7e7</color>
 </resources>

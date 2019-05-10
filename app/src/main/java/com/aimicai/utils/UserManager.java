@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.aimicai.app.MyApplication;
+import com.aimicai.entitiy.Token;
 import com.aimicai.entitiy.UserInfo;
 
 /**
@@ -28,6 +29,10 @@ public class UserManager {
     }
 
 
+    public boolean isLogin() {
+        return getToken() != null;
+    }
+
     private UserManager(Context context) {
         cache = ACache.get(context);
     }
@@ -38,28 +43,44 @@ public class UserManager {
     }
 
     public UserInfo getUserInfo() {
-        return (UserInfo)cache.getAsObject("userInfo");
+        return (UserInfo) cache.getAsObject("userInfo");
     }
 
-    public void loginout(){
-        clearAccessToken();
+    public void loginout() {
         clearUserInfo();
+        clearToken();
     }
 
 
-    public void saveAccessToken(@NonNull String token) {
-        cache.put("access_token", token);
+    //--- token ------------------------------------------------------------------------------------
+
+    public void saveToken(@NonNull Token token) {
+        cache.put("token", token);
     }
 
-    public String getAccessToken() {
-        return cache.getAsString("access_token");
+    public Token getToken() {
+        return (Token) cache.getAsObject("token");
     }
 
-    public void clearAccessToken() {
-        cache.remove("access_token");
+    public void clearToken() {
+        cache.remove("token");
     }
 
-    public void clearUserInfo(){
+    public void clearUserInfo() {
         cache.remove("userInfo");
     }
+
+
+//    public void saveAccessToken(@NonNull String token) {
+//        cache.put("access_token", token);
+//    }
+//
+//    public String getAccessToken() {
+//        return cache.getAsString("access_token");
+//    }
+//
+//    public void clearAccessToken() {
+//        cache.remove("access_token");
+//    }
+
 }
