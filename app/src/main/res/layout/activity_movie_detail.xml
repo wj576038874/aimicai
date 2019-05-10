@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
-    tools:context=".MovieDetailActivity">
+    android:descendantFocusability="blocksDescendants">
     <!--android:descendantFocusability="blocksDescendants"-->
     <!--viewgroup会覆盖子类控件而直接获得焦点，避免RecycleView开始的时候获取焦点滚动到底部-->
 
