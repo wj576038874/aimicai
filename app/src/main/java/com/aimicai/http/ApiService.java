@@ -93,5 +93,5 @@ public interface ApiService {
     @Headers("type:diycode")//区分请求
     @POST("https://diycode.cc/api/v3/photos.json")
     @Multipart
-    Observable<Response<String>> avatar(@Part MultipartBody.Part avatarFile);
+    Observable<Response<Object>> avatar(@Part MultipartBody.Part avatarFile);
 }

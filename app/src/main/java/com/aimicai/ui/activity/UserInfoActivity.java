@@ -59,20 +59,5 @@ public class UserInfoActivity extends BaseActivity {
         } else {
             startActivity(new Intent(this, LoginActivity.class));
         }
-
-        File file = new File(Environment.getExternalStorageDirectory()+"/gcsl/asd.jpg");
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
-        MultipartBody.Part body  = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        subscribe(OkHttpUtils.getInstance().getApiService().avatar(body), new RequestCallback<Response<String>>() {
-            @Override
-            public void onSuccess(Response<String> data) {
-                ToastUtils.showToast(data.body());
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                ToastUtils.showToast(msg);
-            }
-        });
     }
 }
