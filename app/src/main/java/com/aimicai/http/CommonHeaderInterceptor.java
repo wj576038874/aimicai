@@ -24,6 +24,11 @@ public class CommonHeaderInterceptor implements Interceptor {
                 requestBuilder.addHeader("Authorization", token);
             }
         }
+
+        if (str != null && str.equals("bmob")){
+            requestBuilder.addHeader("X-Bmob-Application-Id", "70bae93d39a17ec48dba86df4332cf4e");
+            requestBuilder.addHeader("X-Bmob-REST-API-Key", "dbeee096e4b816c159b3ac2c722a3349");
+        }
         return chain.proceed(requestBuilder.build());
     }
 }

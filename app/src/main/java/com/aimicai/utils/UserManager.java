@@ -70,6 +70,14 @@ public class UserManager {
         cache.remove("userInfo");
     }
 
+    public void saveAvatar(String url) {
+        cache.put("avatar", url);
+    }
+
+    public String getAvatar() {
+        return cache.getAsString("avatar");
+    }
+
 
 //    public void saveAccessToken(@NonNull String token) {
 //        cache.put("access_token", token);

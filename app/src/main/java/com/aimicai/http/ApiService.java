@@ -1,6 +1,7 @@
 package com.aimicai.http;
 
 import com.aimicai.entitiy.BaseNewsPageData;
+import com.aimicai.entitiy.FileResp;
 import com.aimicai.entitiy.RegisterInfo;
 import com.aimicai.entitiy.Token;
 import com.aimicai.entitiy.UserInfo;
@@ -90,8 +91,15 @@ public interface ApiService {
     @GET("https://diycode.cc/api/v3/users/me.json")
     Observable<Response<UserInfo>> getUserInfo();
 
-    @Headers("type:diycode")//区分请求
+    @Headers({
+            "type:diycode"//区分请求
+    })
     @POST("https://diycode.cc/api/v3/photos.json")
     @Multipart
-    Observable<Response<Object>> avatar(@Part MultipartBody.Part avatarFile);
+    Observable<Response<FileResp>> uploadFile(@Part MultipartBody.Part avatarFile);
+
+//    @Headers("type:diycode")//区分请求
+//    @POST("https://diycode.cc/api/v3/photos.json")
+//    @Multipart
+//    Observable<Response<Object>> avatar(@Part MultipartBody.Part avatarFile);
 }

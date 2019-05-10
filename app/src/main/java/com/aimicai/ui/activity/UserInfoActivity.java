@@ -1,8 +1,15 @@
 package com.aimicai.ui.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,15 +19,27 @@ import android.widget.TextView;
 
 import com.aimicai.R;
 import com.aimicai.base.BaseActivity;
+import com.aimicai.entitiy.FileResp;
 import com.aimicai.entitiy.UserInfo;
+import com.aimicai.http.OkHttpUtils;
+import com.aimicai.http.RequestCallback;
 import com.aimicai.utils.StatusBarUtil;
+import com.aimicai.utils.ToastUtils;
 import com.aimicai.utils.UserManager;
 import com.aimicai.widget.behavior.AppBarStateChangeListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.winfo.photoselector.PhotoSelector;
+
+import java.io.File;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import retrofit2.Response;
 
 public class UserInfoActivity extends BaseActivity {
 
@@ -55,9 +74,9 @@ public class UserInfoActivity extends BaseActivity {
                 String avatarUrl = userInfo.getAvatar_url().replace("large_", "");
                 Glide.with(this).load(avatarUrl).apply(new RequestOptions().error(R.drawable.personal_head)).into(avatar);
                 Glide.with(this)
-                        .load("http://bmob-cdn-13351.b0.upaiyun.com/2019/05/09/54b0d24440b59fed80bb50a5645f8257.jpg")
+                        .load(UserManager.getInstance().getAvatar())
                         .transition(new DrawableTransitionOptions().crossFade(300))
-                        .apply(new RequestOptions().error(R.drawable.personal_head))
+                        .apply(new RequestOptions().placeholder(R.drawable.timg).error(R.drawable.timg))
                         .into(header_bg);
                 loginname.setText(userInfo.getLogin());
                 name.setText(userInfo.getName());
@@ -106,8 +125,85 @@ public class UserInfoActivity extends BaseActivity {
 //                }
 //            }
 //        });
+
+
+        header_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //单选后剪裁 裁剪的话都是针对一张图片所以要设置setSingle(true)
+                PhotoSelector.builder()
+                        .setSingle(true)//单选，裁剪都是单选
+                        .setCrop(false)//是否裁剪
+                        .setMaterialDesign(true)
+                        .setCropMode(PhotoSelector.CROP_RECTANG)//设置裁剪模式 矩形还是圆形
+                        .setStatusBarColor(ContextCompat.getColor(UserInfoActivity.this, R.color.colorPrimary))
+                        .setToolBarColor(ContextCompat.getColor(UserInfoActivity.this, R.color.colorPrimary))
+                        .setBottomBarColor(ContextCompat.getColor(UserInfoActivity.this, R.color.colorPrimary))
+                        .setStatusBarColor(ContextCompat.getColor(UserInfoActivity.this, R.color.colorPrimary))
+                        .start(UserInfoActivity.this, 200);
+//                Intent intent = new Intent();
+//                if (Build.VERSION.SDK_INT < 19) {
+//                    intent.setAction(Intent.ACTION_GET_CONTENT);
+//                    intent.setType("image/*");
+//                } else {
+//                    intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+//                }
+//                startActivityForResult(intent,100);
+            }
+        });
+
+
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == -1){
+            if (requestCode == 100){
+                assert data != null;
+                Uri selectedImage = data.getData();
+                String[] filePathColumns = {MediaStore.Images.Media.DATA};
+                assert selectedImage != null;
+                Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
+                assert c != null;
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePathColumns[0]);
+                String imagePath = c.getString(columnIndex);
+                c.close();
+                uploadFile(new File(imagePath));
+            }else if (requestCode == 200 && data!=null){
+                String path = data.getStringArrayListExtra(PhotoSelector.SELECT_RESULT).get(0);
+                uploadFile(new File(path));
+            }
+        }
+    }
+
+    private void uploadFile(File file){
+        RequestBody requestFile = RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        showLoadDialog();
+        subscribe(OkHttpUtils.getInstance().getApiService().uploadFile(body), new RequestCallback<Response<FileResp>>() {
+            @Override
+            public void onSuccess(Response<FileResp> data) {
+                dismissLoadDialog();
+                assert data.body() != null;
+                UserManager.getInstance().saveAvatar(data.body().getImage_url());
+                Glide.with(UserInfoActivity.this)
+                        .load(data.body().getImage_url())
+                        .transition(new DrawableTransitionOptions().crossFade(300))
+                        .apply(new RequestOptions().error(R.drawable.timg).placeholder(R.drawable.timg))
+                        .into(header_bg);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(msg);
+            }
+        });
+    }
 
     @Override
     protected int getDispatcherLayout() {
