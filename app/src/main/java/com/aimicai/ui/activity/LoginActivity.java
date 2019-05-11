@@ -28,6 +28,11 @@ public class LoginActivity extends BaseActivity {
     private EditText editTextPwd;
 
     @Override
+    protected boolean getCustomeLayout() {
+        return false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);

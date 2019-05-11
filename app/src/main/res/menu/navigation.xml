@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_message"
         android:icon="@drawable/va_xiaoxi"
-        android:title="新闻" />
+        android:title="电影" />
 
     <item
         android:id="@+id/navigation_service"

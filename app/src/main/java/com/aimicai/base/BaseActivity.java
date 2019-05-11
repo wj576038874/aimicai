@@ -57,23 +57,23 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
     }
 
 
-    protected int getDispatcherLayout() {
-        return R.layout.activity_base_content;
+    protected boolean getCustomeLayout() {
+        return true;
     }
 
     @Override
     public void setContentView(int layoutResID) {
         /*
-         * getDispatcherLayout默认是activity_base_content+自己的布局 如果返回0则代表自己定义toolbar
+         * getCustomeLayout默认是activity_base_content+自己的布局 如果返回true则代表自己定义toolbar
          */
-        if (getDispatcherLayout() != 0) {
+        if (getCustomeLayout()) {
+            super.setContentView(layoutResID);
+        } else {
             super.setContentView(R.layout.activity_base_content);
             ViewGroup content = findViewById(R.id.base_content);
             toolbar = findViewById(R.id.toolbar);
             title = findViewById(R.id.toolbar_title);
             LayoutInflater.from(this).inflate(layoutResID, content);
-        } else {
-            super.setContentView(layoutResID);
         }
         setStatusBar();
     }
@@ -99,7 +99,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
         });
     }
 
-    protected void initToolbar(Toolbar toolbar){
+    protected void initToolbar(Toolbar toolbar) {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;

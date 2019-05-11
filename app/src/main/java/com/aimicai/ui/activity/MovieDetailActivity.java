@@ -147,10 +147,6 @@ public class MovieDetailActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected int getDispatcherLayout() {
-        return 0;
-    }
 
     private void loadDetail(String id){
         showLoadDialog();

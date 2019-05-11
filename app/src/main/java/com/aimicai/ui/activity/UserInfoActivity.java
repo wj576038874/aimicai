@@ -206,11 +206,6 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     @Override
-    protected int getDispatcherLayout() {
-        return 0;
-    }
-
-    @Override
     protected void setStatusBar() {
         StatusBarUtil.setTransparentForImageView(this, findViewById(R.id.toolbar));
     }

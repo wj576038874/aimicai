@@ -63,11 +63,6 @@ public class ChuangyeActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected int getDispatcherLayout() {
-        return 0;
-    }
-
     private class PageAdapter extends FragmentStatePagerAdapter {
 
         PageAdapter(FragmentManager fm) {

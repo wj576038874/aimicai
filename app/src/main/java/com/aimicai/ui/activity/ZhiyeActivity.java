@@ -20,8 +20,6 @@ import java.util.List;
 
 public class ZhiyeActivity extends BaseActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +56,6 @@ public class ZhiyeActivity extends BaseActivity {
         }else {
             StatusBarUtil.setColor(this, getResources().getColor(R.color.white));
         }
-    }
-
-    @Override
-    protected int getDispatcherLayout() {
-        return 0;
     }
 
     private List<GridInfo> getDatas() {

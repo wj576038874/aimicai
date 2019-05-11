@@ -40,6 +40,11 @@ public class ShopActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
 
+    @Override
+    protected boolean getCustomeLayout() {
+        return false;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
