@@ -47,5 +47,5 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.41'
     api 'com.just.agentweb:agentweb:4.0.3-alpha@aar' // (必选)
     implementation 'de.hdodenhof:circleimageview:3.0.0'
-    implementation 'com.winfo.photoselector:PhotoSelector:1.2.1'
+    implementation project(path: ':PhotoSelector')
 }
