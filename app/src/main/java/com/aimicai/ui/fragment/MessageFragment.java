@@ -2,6 +2,7 @@ package com.aimicai.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +22,7 @@ import com.aimicai.adapter.NewsDataAdapter;
 import com.aimicai.base.BaseFragment;
 import com.aimicai.entitiy.BaseNewsPageData;
 import com.aimicai.entitiy.movie.HotMovieBean;
+import com.aimicai.entitiy.movie.child.SubjectsBean;
 import com.aimicai.entitiy.news.NewsData;
 import com.aimicai.http.OkHttpUtils;
 import com.aimicai.http.RequestCallback;
@@ -28,8 +30,24 @@ import com.aimicai.ui.activity.MovieDetailActivity;
 import com.aimicai.ui.activity.WebActivity;
 import com.aimicai.utils.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 /**
@@ -45,6 +63,7 @@ public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.
     private SwipeRefreshLayout swipeRefreshLayout;
     private HotMovieAdapter hotMovieAdapter;
     private int start;
+    private Disposable disposable;
 
     public MessageFragment() {
     }
@@ -97,22 +116,50 @@ public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.
 
     private void getMovies() {
         swipeRefreshLayout.setRefreshing(true);
-        start = 0;
-        subscribe(OkHttpUtils.getInstance().getApiService().getMovieTop250(start, 20), new RequestCallback<Response<HotMovieBean>>() {
-            @Override
-            public void onSuccess(Response<HotMovieBean> data) {
-                swipeRefreshLayout.setRefreshing(false);
-                assert data.body() != null;
-                start += 20;
-                hotMovieAdapter.setNewData(data.body().getSubjects());
-            }
 
+        disposable = Observable.create(new ObservableOnSubscribe<List<SubjectsBean>>() {
             @Override
-            public void onFailure(String msg) {
-                swipeRefreshLayout.setRefreshing(false);
-                ToastUtils.showToast(msg);
+            public void subscribe(ObservableEmitter<List<SubjectsBean>> emitter) throws Exception {
+                Gson gson = new Gson();
+                String data = getJsonStr(mBaseActivity);
+                List<SubjectsBean> datas = gson.fromJson(data, new TypeToken<List<SubjectsBean>>() {
+                }.getType());
+                emitter.onNext(datas);
+                emitter.onComplete();
             }
-        });
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<SubjectsBean>>() {
+                    @Override
+                    public void accept(List<SubjectsBean> subjectsBeans) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        hotMovieAdapter.setNewData(subjectsBeans);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        swipeRefreshLayout.setRefreshing(false);
+                        ToastUtils.showToast(throwable.getMessage());
+                    }
+                });
+
+
+//        start = 0;
+//        subscribe(OkHttpUtils.getInstance().getApiService().getMovieTop250(start, 20), new RequestCallback<Response<HotMovieBean>>() {
+//            @Override
+//            public void onSuccess(Response<HotMovieBean> data) {
+//                swipeRefreshLayout.setRefreshing(false);
+//                assert data.body() != null;
+//                start += 20;
+//                hotMovieAdapter.setNewData(data.body().getSubjects());
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                swipeRefreshLayout.setRefreshing(false);
+//                ToastUtils.showToast(msg);
+//            }
+//        });
     }
 
 
@@ -138,6 +185,7 @@ public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.
 
             @Override
             public void onFailure(String msg) {
+                hotMovieAdapter.loadMoreFail();
                 ToastUtils.showToast(msg);
             }
         });
@@ -156,5 +204,30 @@ public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.
     @Override
     public void onLoadMoreRequested() {
         getPage();
+    }
+
+
+    private String getJsonStr(Context context) {
+        StringBuilder stringBuffer = new StringBuilder();
+        AssetManager assetManager = context.getAssets();
+        try {
+            InputStream is = assetManager.open("hot_movie.json");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            String str;
+            while ((str = br.readLine()) != null) {
+                stringBuffer.append(str);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuffer.toString();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }
